@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    .splash {
+        position: absolute;
+        width: 640px;
+        height: 240px;
+        background-image: url(./images/splash.png);
+        background-repeat: no-repeat;
+        animation: splash-anim 2s steps(12) infinite;
+    }
+    .win {
+        position: absolute;
+        width: 640px;
+        height: 240px;
+        background-image: url(./images/win.png);
+        background-repeat: no-repeat;
+    }
+    .anim-start {
+        animation: win-animX 1s steps(7) infinite, win-animY 10s steps(10) infinite;
+    }
+    .anim-end {
+        background-position-x: -3840px;
+        background-position-y: -2160px;
+        animation: none;
+    }
+    .button {
+        position: absolute;
+        width: 280px;
+        height: 138px;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-image: url(./images/button-up.png);
+    }
+    .button:active {
+        background-image: url(./images/button-dn.png);
+    }
+    .proof {
+        position: absolute;
+        color: magenta;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 3em;
+        text-transform: uppercase;
+        left: 10px;
+        bottom: 10px;
+    }
+    .hidden {
+        visibility: hidden;
+    }
+    @keyframes splash-anim {
+        0% {background-position-y: 0px;}
+        100% {background-position-y: -2880px}
+    }
+    @keyframes win-animX {
+        0% {background-position-x: 0px;}
+        100% {background-position-x: -4480px;}
+    }
+    @keyframes win-animY {
+        0% {background-position-y: 0px;}
+        100% {background-position-y: -2400px;}
+    }
+    </style>
+
+</head>
+<body>
+    <div id="splash" class="splash">
+        <div class="proof">
+            Proof
+        </div>
+        <div class="button" onclick="spin()">
+
+        </div>
+    </div>
+    <div id="win" class="win hidden">
+        <div class="proof">
+            Proof
+        </div>
+    </div>
+</body>
+<script>
+    let cols = 7;
+    var i = 0;
+
+    document.querySelector('#win').addEventListener('animationiteration', function _listener() {
+        i ++;
+        if (i >= cols) {
+            this.classList.add("anim-end");
+            this.removeEventListener('animationiteration', _listener);
+        }
+    });
+
+    function spin() {
+        document.querySelector('#splash').classList.toggle("hidden");
+        document.querySelector('#win').classList.toggle("hidden");
+        document.querySelector('#win').classList.add("anim-start");
+    }
+</script>
+</html>
